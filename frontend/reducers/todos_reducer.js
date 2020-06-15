@@ -1,5 +1,5 @@
 import React from 'react';
-import { RECEIVE_TODOS, RECEIVE_TODO } from '../actions/todo_actions'
+import { RECEIVE_TODOS, RECEIVE_TODO, REMOVE_TODO } from '../actions/todo_actions'
 
 const initialState = {
     1: {
@@ -27,7 +27,11 @@ const todosReducer = ( oldState = initialState, action ) => {
             return nextState;
         case RECEIVE_TODO:
             const newTodo = { [action.todo.id]: action.todo };
-            return Object.assign({}, oldState, newTodo)
+            return Object.assign({}, oldState, newTodo);
+        case REMOVE_TODO:
+            nextState = Object.assign({}, oldState);
+            delete nextState[action.todo.id];
+            return nextState;
         default:
             return oldState;
     }
